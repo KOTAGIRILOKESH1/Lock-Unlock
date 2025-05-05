@@ -1,0 +1,8 @@
+virtual machine,Microsoft.Compute/virtualMachines
+network interface,Microsoft.Network/networkInterfaces
+public ip address,Microsoft.Network/publicIPAddresses
+network security group,Microsoft.Network/networkSecurityGroups
+virtual network,Microsoft.Network/virtualNetworks
+disk,Microsoft.Compute/disks
+storage,Microsoft.Storage/storageAccounts
+
