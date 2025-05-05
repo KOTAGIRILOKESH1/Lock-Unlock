@@ -1,0 +1,45 @@
+trigger: none  # manual trigger only
+
+parameters:
+- name: managementGroup
+  displayName: 'Management Group Name'
+  type: string
+  default: ''
+
+- name: subscriptions
+  displayName: 'Subscription IDs (comma-separated)'
+  type: string
+  default: ''
+
+- name: resourceGroups
+  displayName: 'Resource Groups (comma-separated)'
+  type: string
+  default: ''
+
+- name: lockState
+  displayName: 'Lock or Unlock'
+  type: string
+  values:
+    - Lock
+    - Unlock
+  default: Lock
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  ResourceTypeFilePath: '$(Build.SourcesDirectory)\Resourcetype.txt'
+
+steps:
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: 'svc-shellconnection'
+    ScriptType: 'FilePath'
+    ScriptPath: '$(Build.SourcesDirectory)\testingpocresource.ps1'
+    ScriptArguments: >
+      -ManagementGroupName "${{ parameters.managementGroup }}"
+      -SubscriptionIds "${{ parameters.subscriptions }}"
+      -ResourceGroups "${{ parameters.resourceGroups }}"
+      -LockState "${{ parameters.lockState }}"
+      -ResourceTypeFilePath "$(ResourceTypeFilePath)"
+    azurePowerShellVersion: 'LatestVersion'
